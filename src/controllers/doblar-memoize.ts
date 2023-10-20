@@ -1,20 +1,27 @@
-export function memoize <T, U>(fn: (arg: T) => U): (arg: T) => U {
-  const save = new Map<T, U>();
+type MemoizeArgs = number[];
 
-  return (arg:T) => {
-    if (save.has(arg)) {
-      return save.get(arg) as U;
+export function memoize(fn: Function) {
+  const cache: { [key: string]: number } = {};
+
+  return function (...args: MemoizeArgs) {
+    const key = JSON.stringify(args);
+
+    if(cache[key] !== undefined) {
+      return cache[key];
     } else {
-      const result = fn(arg);
-      save.set(arg, result);
+      const result = fn(...args);
+      cache[key] = result;
       return result;
     }
   };
 }
 
 function doblar(x: number): number {
-  console.log(x * 2);
+  console.log(`Calculando el doble de ${x}`);
   return x * 2;
 }
 
 const resultadoMemoize = memoize(doblar);
+
+// console.log(resultadoMemoize());
+

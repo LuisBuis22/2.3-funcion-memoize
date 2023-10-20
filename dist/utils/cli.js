@@ -7,41 +7,22 @@ function doblar(x) {
     return x * 2;
 }
 const program = new commander_1.Command;
-program.storeOptionsAsProperties(true);
-const state = {};
 program
     .version("1.0.0")
-    .description("Obtendra el doble del valor x múltiples veces inmediatamente a partir de la segunda operación gracias a la función memoize");
+    .description("Calcula el doble de un número x");
 program
-    .option("-g, --guardar <numero>, Guarda un número x para posteriormente calcular su doble")
-    .option("-d, --doblar <veces>, Te devuelvo el doble de la x varias veces")
+    .option("-x, --numero <x>", "Número para calcular su doble")
     .action((options) => {
-    if (options.guardar) {
-        const x = parseFloat(options.guardar);
-        if (!isNaN(x)) {
-            state.numero = x;
-            console.log(`Número ${x} guardado`);
-        }
-        else {
-            console.error("Ingresa un número válido");
+    const x = parseFloat(options.numero);
+    if (!isNaN(x)) {
+        const memoizedDoblar = (0, doblar_memoize_1.memoize)(doblar);
+        for (let i = 0; i < 10; i++) {
+            const resultado = memoizedDoblar(x);
+            console.log(`El doble de ${x} es ${resultado}`);
         }
     }
-    else if (options.doblar) {
-        if (typeof state.numero === 'number') {
-            const memoizeDoble = (0, doblar_memoize_1.memoize)(doblar);
-            const x = state.numero;
-            const numVeces = parseInt(options.doblar);
-            if (!isNaN(numVeces)) {
-                for (let i = 0; i < numVeces; i++) {
-                    const resultado = memoizeDoble(x);
-                    console.log(`Doble ${i + 1}El doble de ${x} es ${resultado}.`);
-                }
-            }
-            console.error("Ingresa un número válido para la cantidad de veces.");
-        }
-        else {
-            console.error("No se ha guardado ningún número. Usa '--guardar' primero.");
-        }
+    else {
+        console.error("Ingresa un número válido como argumento.");
     }
 });
 program.parse(process.argv);

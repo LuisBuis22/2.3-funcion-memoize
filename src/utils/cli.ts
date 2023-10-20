@@ -8,46 +8,29 @@ function doblar(x: number): number {
 
 const program = new Command;
 
-program.storeOptionsAsProperties(true);
+program
+  .version("1.0.0")
+  .description("Calcula el doble de un número x");
 
-const state: { numero?: number } = {};
-
-program 
-.version("1.0.0")
-.description("Obtendra el doble del valor x múltiples veces inmediatamente a partir de la segunda operación gracias a la función memoize");
+// Escribir npm start -- -x 5  (por poner un ejemplo, en lugar del 5 puede ir otro número)
 
 program
-.option("-g, --guardar <numero>, Guarda un número x para posteriormente calcular su doble")
-.option("-d, --doblar <veces>, Te devuelvo el doble de la x varias veces")
-.action ((options) => {
-  if (options.guardar) {
-    const x = parseFloat(options.guardar);
-  if(!isNaN(x)) {
-    state.numero = x;
-    console.log(`Número ${x} guardado`);
-  } else {
-    console.error("Ingresa un número válido");
-  }
-} else if (options.doblar) {
-  if (typeof state.numero === 'number') {
+  .option("-x, --numero <x>", "Número para calcular su doble")
+  .action((options) => {
+    const x = parseFloat(options.numero);
 
-    const memoizeDoble = memoize(doblar);
+    if (!isNaN(x)) {
+      const memoizedDoblar = memoize(doblar);
 
-    const x = state.numero;
-
-    const numVeces = parseInt(options.doblar);
-
-    if (!isNaN(numVeces)) {
-      for (let i = 0; i < numVeces; i++) {
-      const resultado = memoizeDoble(x);
-      console.log(`Doble ${i + 1}El doble de ${x} es ${resultado}.`);
+      for (let i = 0; i < 10; i++) {
+      const resultado = memoizedDoblar(x);
+      console.log(`El doble de ${x} es ${resultado}`);
       }
-    }  console.error("Ingresa un número válido para la cantidad de veces.");
-  } else {
-    console.error("No se ha guardado ningún número. Usa '--guardar' primero.");
-  }
-}
-});
+      
+    } else {
+      console.error("Ingresa un número válido como argumento.");
+    }
+  });
 
 
 program.parse(process.argv);

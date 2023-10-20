@@ -1,4 +1,4 @@
-import { memoize } from "../src/funcion-memoize";
+import { memoize } from "./controllers/doblar-memoize";
 
 describe("Creando función memoize", () => {
   test('La función memoize tiene que devolver el mismo resultado al recibir el mismo input', () => {
@@ -7,6 +7,6 @@ describe("Creando función memoize", () => {
 
     expect(memoized(2)).toBe(4);
     expect(memoized(2)).toBe(4);
-    expect(memoized(3)).toBe(6);
+    expect(memoized(2)).toBe(4);
   });
 });

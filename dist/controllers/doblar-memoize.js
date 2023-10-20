@@ -2,21 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.memoize = void 0;
 function memoize(fn) {
-    const save = new Map();
-    return (arg) => {
-        if (save.has(arg)) {
-            return save.get(arg);
+    const cache = {};
+    return function (...args) {
+        const key = JSON.stringify(args);
+        if (cache[key] !== undefined) {
+            return cache[key];
         }
         else {
-            const result = fn(arg);
-            save.set(arg, result);
+            const result = fn(...args);
+            cache[key] = result;
             return result;
         }
     };
 }
 exports.memoize = memoize;
 function doblar(x) {
-    console.log(x * 2);
+    console.log(`Calculando el doble de ${x}`);
     return x * 2;
 }
 const resultadoMemoize = memoize(doblar);

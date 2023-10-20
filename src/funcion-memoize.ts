@@ -1,4 +1,4 @@
-export function memoize <T, U>(fn: (arg: T) => U): (arg: T) => U {
+function memoize <T, U>(fn: (arg: T) => U): (arg: T) => U {
   const save = new Map<T, U>();
 
   return (arg:T) => {
@@ -17,10 +17,10 @@ function doblar(x: number): number {
   return x * 2;
 }
 
-const resultadoMemoize = memoize(doblar);
+const memoizeDoble = memoize(doblar);
 
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));

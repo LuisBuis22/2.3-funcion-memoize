@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const doblar_memoize_1 = require("./controllers/doblar-memoize");
+const doblar_memoize_1 = require("../controllers/doblar-memoize");
 describe("Creando función memoize", () => {
     test('La función memoize tiene que devolver el mismo resultado al recibir el mismo input', () => {
         const doblar = (x) => x * 2;

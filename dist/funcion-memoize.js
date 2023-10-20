@@ -1,6 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.memoize = void 0;
 function memoize(fn) {
     const save = new Map();
     return (arg) => {
@@ -14,15 +12,14 @@ function memoize(fn) {
         }
     };
 }
-exports.memoize = memoize;
 function doblar(x) {
     console.log(x * 2);
     return x * 2;
 }
-const resultadoMemoize = memoize(doblar);
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
-console.log(resultadoMemoize(2));
+const memoizeDoble = memoize(doblar);
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));
+console.log(memoizeDoble(2));
 //# sourceMappingURL=funcion-memoize.js.map
